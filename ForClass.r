@@ -1,16 +1,18 @@
 library(ggplot2)
 
+setwd('~/Documents/School/SP19/Stats/MarkRecapture/sim')
+
 rm(list=ls())
 num_iters = 1000
 d = data.frame(data=matrix(nrow = 2 * num_iters, ncol = 3))
 colnames(d) = c('round', 'trt', 'guess')
 
 for(i  in 1:num_iters){
-  n = 70
-  max_val = 2
+  n = 60
+  max_val = 3
   A = floor(runif(n, min = 1, max = max_val + 1))
   B = floor(runif(n, min = 1, max = max_val + 1))
-  M = matrix(nrow = n, ncol = 2, data = c(A,B), byrow = T)
+  M = matrix(nrow = n, ncol = 2, data = c(A,B), byrow = F)
   
   first_check = 1
   second_check = 1
@@ -31,4 +33,4 @@ ggplot(d[d$trt==1,], aes(x=trt, y = guess, group=trt)) +
   geom_boxplot() + 
   geom_hline(yintercept = n, color='green') + 
   ylab('Estimate') + xlab('')
-
+ggsave(filename = 'ForClass.png', width = 2, height = 4, units = 'in')
